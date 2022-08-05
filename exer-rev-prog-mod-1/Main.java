@@ -6,22 +6,28 @@ public class Main{
 
         Scanner teclado = new Scanner(System.in);
 
-        Exercicio1(teclado);
+        ExercicioBasicos(teclado);
 
 
     }
 
     /* Menu Exercícios */
 
-    public static void Exercicio1(Scanner teclado){
+    /* Básicos */
 
-        int[] vetor = CriaVetor(6, teclado);
+    public static void ExercicioBasicos(Scanner teclado){
+
+        int[] vetor = CriaVetor(7, teclado);
         
         ImprimiVetor(vetor);
 
         vetor = InverteVetor(vetor);
 
         ImprimiVetor(vetor);
+
+        int[] vetor_soma = CriaVetorSoma(vetor);
+
+        ImprimiVetor(vetor_soma);
 
 
     }
@@ -32,11 +38,30 @@ public class Main{
 
         for(int i = 0; i < vetor.length; i++){
 
-            System.out.println(vetor[i]);
+            if(i + 1 != vetor.length){
+
+                System.out.print(vetor[i] + "-");
+
+            }else{
+
+                System.out.println(vetor[i]);
+            }
+
+            
         }
 
     }
 
+    private static boolean isImpar(int tamanho_vetor){
+
+        if(tamanho_vetor % 2 == 0){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+    
     /* Exercício 1 */
 
     private static int[] CriaVetor(int tamanho_vetor, Scanner teclado){
@@ -70,5 +95,35 @@ public class Main{
 
     }
 
+    /* Exercício 2 */
+
+    private static int[] CriaVetorSoma(int vetor_inteiro[]){
+
+        boolean is_impar = isImpar(vetor_inteiro.length);
+        int tamanho_vetor_retornar = vetor_inteiro.length / 2;
+        int posicao_atual_vetor = 0;
+        
+        if(is_impar){
+            tamanho_vetor_retornar++;
+        }
+
+        int[] vetor_retornar = new int[tamanho_vetor_retornar];
+
+        for(int i = 0; i < vetor_inteiro.length; i += 2){
+
+            if(i + 1 < vetor_inteiro.length){
+                vetor_retornar[posicao_atual_vetor] = vetor_inteiro[i] + vetor_inteiro[i+1];
+                posicao_atual_vetor++;
+            }else{
+                vetor_retornar[posicao_atual_vetor] = vetor_inteiro[i];
+            }
+
+        }
+
+        return vetor_retornar;
+
+
+
+    }
 
 }
