@@ -8,7 +8,7 @@ public class Main{
 
         ExercicioBasicos(teclado);
 
-
+        teclado.close();
     }
 
     /* Menu Exercícios */
@@ -29,6 +29,12 @@ public class Main{
 
         ImprimiVetor(vetor_soma);
 
+
+    }
+
+    /* Aplicados */
+
+    public static void ExerciciosAplicados(Scanner teclado){
 
     }
 
@@ -61,7 +67,19 @@ public class Main{
         }
 
     }
-    
+
+    private static void FlushTeclado(Scanner teclado){
+
+        teclado.nextLine();
+
+    }
+
+    private static String PegaData(Scanner teclado){
+
+        return teclado.nextLine();
+
+    }
+
     /* Exercício 1 */
 
     private static int[] CriaVetor(int tamanho_vetor, Scanner teclado){
@@ -125,5 +143,56 @@ public class Main{
 
 
     }
+
+    /* Exercício 3 */
+
+    private static boolean VerificaData(String data, int tentativas){
+
+        if(tentativas > 2){
+            System.out.println("Digite nesse formato: DD/MM/AAAA");
+        }
+            
+        char[] caracteres_data = data.toCharArray();
+
+        if(caracteres_data[2] == '/' && caracteres_data[5] == '/'){
+
+            String[] dia_mes_ano = data.split("/");
+            
+            for(int i = 0; i < caracteres_data.length; i++){
+
+                if(i != 2 && i != 5){
+
+                    if(!((int)caracteres_data[i] > 47 && (int)caracteres_data[i] < 58)){
+
+                        System.out.println("A data suporta apenas números e '/'");
+                        return false;
+
+                    }
+
+                }
+
+            }
+
+            int dia = Integer.parseInt(dia_mes_ano[0]);
+            int mes = Integer.parseInt(dia_mes_ano[1]);
+
+            
+
+            
+
+
+        }else{
+
+            System.out.println("A data precisa do caractere '/'");
+            return false;
+
+        }
+
+
+
+        return true;
+
+    }
+    
 
 }
