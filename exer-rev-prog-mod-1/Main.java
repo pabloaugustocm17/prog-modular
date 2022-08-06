@@ -1,16 +1,24 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Main {
+
+    static Vector<Integer> VECTOR_EXERCICIO_4 = new Vector<>();
 
     public static void main(String[] args) {
 
         Scanner teclado = new Scanner(System.in);
 
-        ExercicioBasicos(teclado);
+        //ExercicioBasicos(teclado);
 
-        FlushTeclado(teclado);
+        //FlushTeclado(teclado);
 
-        ExerciciosAplicados(teclado);
+        //ExerciciosAplicados(teclado);
+
+        //UsoDeArquivos();
 
         teclado.close();
     }
@@ -46,8 +54,13 @@ public class Main {
 
     /* Uso de arquivos */
 
-    public static void UsoDeArquivos(Scanner teclado) {
+    public static void UsoDeArquivos() {
 
+        LeArquivoVetor(PegaArquivo("C:\\Users\\pablo\\Documents\\GitHub\\prog-modular\\exer-rev-prog-mod-1\\file-exec5.txt"));
+
+        Vector<Integer> vetor = CriaVectorSoma();
+
+        ImprimiVector(vetor);
     }
 
     /* Utilitarios */
@@ -242,6 +255,65 @@ public class Main {
 
     }
 
+    private static File PegaArquivo(String path){
+
+        return new File(path);
+
+    }
+
+    private static void PreencheVector(String linha){
+
+        String[] numeros_linha = linha.split(";");
+
+        for(int i = 0; i < numeros_linha.length; i++){
+
+            VECTOR_EXERCICIO_4.add(Integer.parseInt(numeros_linha[i]));
+
+        }
+
+
+    }
+
+    private static void ImprimiVector(Vector<Integer> vetor){
+
+        for(int i = 0 ; i < vetor.size() ; i++){
+
+            if(i+1 == vetor.size()){
+                System.out.println(vetor.get(i));
+            }else{
+                System.out.print(vetor.get(i) + "-");
+            }
+
+        }
+
+    }
+
+    private static Vector<Integer> CriaVectorSoma(){
+
+        boolean is_impar = isImpar(VECTOR_EXERCICIO_4.size());
+        int tamanho_vetor_retornar = VECTOR_EXERCICIO_4.size() / 2;
+
+        if (is_impar) {
+            tamanho_vetor_retornar++;
+        }
+
+        Vector<Integer> vector_retornar = new Vector<>();
+
+        for (int i = 0; i < VECTOR_EXERCICIO_4.size(); i += 2) {
+
+            if (i + 1 < VECTOR_EXERCICIO_4.size()) {
+                vector_retornar.add(VECTOR_EXERCICIO_4.get(i) + VECTOR_EXERCICIO_4.get(i+1));
+            } else {
+                vector_retornar.add(VECTOR_EXERCICIO_4.lastElement());
+            }
+
+        }
+
+        return vector_retornar;
+
+
+    }
+
     /* Exercício 1 */
 
     private static int[] CriaVetor(int tamanho_vetor, Scanner teclado) {
@@ -385,4 +457,38 @@ public class Main {
     }
 
     /* Exercício 5 */
+
+    private static void LeArquivoVetor(File arquivo){
+
+        try(FileReader fileReader = new FileReader(arquivo)){
+
+            try(BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+                String linha = bufferedReader.readLine();
+
+                while(linha != null){
+
+                    PreencheVector(linha);
+
+                    linha = bufferedReader.readLine();
+
+                }
+
+                bufferedReader.close();
+
+            }catch(Exception e){
+                System.out.println(e);
+            }
+
+
+            fileReader.close();
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+        
+
+    }
+
 }

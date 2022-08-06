@@ -11,3 +11,9 @@ Esse exerício conta com dois métodos, sendo eles `IsImpar()`, retornando se o 
 Esse exercício conta com um método utilitário `PegaData()` que retorna uma String, logo após isso essa data é verificada no método `VerificaData()`, onde é retornado como data válida ou inválida, mostrando o erro do input
 
 # Exercício 4
+
+# Exercício 5
+
+# Exercício 6
+
+
