@@ -6,7 +6,9 @@ public class Main{
 
         Scanner teclado = new Scanner(System.in);
 
-        ExercicioBasicos(teclado);
+        //ExercicioBasicos(teclado);
+        ExerciciosAplicados(teclado);
+
 
         teclado.close();
     }
@@ -35,6 +37,20 @@ public class Main{
     /* Aplicados */
 
     public static void ExerciciosAplicados(Scanner teclado){
+
+        String data = PegaData(teclado);
+
+        boolean data_valida = VerificaData(data);
+
+        while(!data_valida){
+
+            System.out.println("Informe novamente a data: ");
+            data = PegaData(teclado);
+            data_valida = VerificaData(data);
+        
+        }
+
+        System.out.println("Data válida");
 
     }
 
@@ -146,11 +162,7 @@ public class Main{
 
     /* Exercício 3 */
 
-    private static boolean VerificaData(String data, int tentativas){
-
-        if(tentativas > 2){
-            System.out.println("Digite nesse formato: DD/MM/AAAA");
-        }
+    private static boolean VerificaData(String data){
             
         char[] caracteres_data = data.toCharArray();
 
@@ -164,7 +176,7 @@ public class Main{
 
                     if(!((int)caracteres_data[i] > 47 && (int)caracteres_data[i] < 58)){
 
-                        System.out.println("A data suporta apenas números e '/'");
+                        System.out.println("A data suporta apenas números e '/', sendo esse formato DD/MM/AAAA");
                         return false;
 
                     }
@@ -176,10 +188,32 @@ public class Main{
             int dia = Integer.parseInt(dia_mes_ano[0]);
             int mes = Integer.parseInt(dia_mes_ano[1]);
 
-            
+            if(mes > 0 && mes < 12){
 
-            
+                if(dia > 0 && dia < 32){
 
+                    if(mes == 2 && dia > 28){
+                        System.out.println("O mês de fevereiro de 2022 vai até o dia 28");
+                        return false;
+                    }
+
+                    if((mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && dia > 30 ){
+                        System.out.println("Esse mês possuí 30 dias");
+                        return false;
+                    }
+
+
+                }else{
+                    System.out.println("Dia inválido");
+                    return false;
+                }
+
+            }else{
+
+                System.out.println("Mês inválido");
+                return false;
+
+            }
 
         }else{
 
@@ -187,8 +221,6 @@ public class Main{
             return false;
 
         }
-
-
 
         return true;
 
