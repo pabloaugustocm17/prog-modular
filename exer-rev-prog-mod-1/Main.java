@@ -12,13 +12,14 @@ public class Main {
 
         Scanner teclado = new Scanner(System.in);
 
-        //ExercicioBasicos(teclado);
+        ExercicioBasicos(teclado);
 
-        //FlushTeclado(teclado);
+        FlushTeclado(teclado);
 
-        //ExerciciosAplicados(teclado);
+        ExerciciosAplicados(teclado);
 
-        //UsoDeArquivos();
+        UsoDeArquivos();
+
 
         teclado.close();
     }
@@ -61,6 +62,8 @@ public class Main {
         Vector<Integer> vetor = CriaVectorSoma();
 
         ImprimiVector(vetor);
+
+        LearquivoData(PegaArquivo("C:\\Users\\Pablo Magalhães\\Documents\\GitHub\\prog-modular\\exer-rev-prog-mod-1\\file-exec-6.txt"));
     }
 
     /* Utilitarios */
@@ -290,13 +293,6 @@ public class Main {
 
     private static Vector<Integer> CriaVectorSoma(){
 
-        boolean is_impar = isImpar(VECTOR_EXERCICIO_4.size());
-        int tamanho_vetor_retornar = VECTOR_EXERCICIO_4.size() / 2;
-
-        if (is_impar) {
-            tamanho_vetor_retornar++;
-        }
-
         Vector<Integer> vector_retornar = new Vector<>();
 
         for (int i = 0; i < VECTOR_EXERCICIO_4.size(); i += 2) {
@@ -381,7 +377,7 @@ public class Main {
 
         char[] caracteres_data = data.toCharArray();
 
-        if (caracteres_data[2] == '/' && caracteres_data[5] == '/') {
+        if (caracteres_data[2] == '/' && caracteres_data[5] == '/' && caracteres_data.length == 10) {
 
             String[] dia_mes_ano = data.split("/");
 
@@ -391,7 +387,7 @@ public class Main {
 
                     if (!((int) caracteres_data[i] > 47 && (int) caracteres_data[i] < 58)) {
 
-                        System.out.println("A data suporta apenas números e '/', sendo esse formato DD/MM/AAAA");
+                        System.out.println("A data suporta apenas números e '/', sendo esse formato DD/MM/AAAA: " + data);
                         return false;
 
                     }
@@ -408,30 +404,30 @@ public class Main {
                 if (dia > 0 && dia < 32) {
 
                     if (mes == 2 && dia > 28) {
-                        System.out.println("O mês de fevereiro de 2022 vai até o dia 28");
+                        System.out.println("O mês de fevereiro de 2022 vai até o dia 28: " + data);
                         return false;
                     }
 
                     if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30) {
-                        System.out.println("Esse mês possuí 30 dias");
+                        System.out.println("Esse mês possuí 30 dias: " + data);
                         return false;
                     }
 
                 } else {
-                    System.out.println("Dia inválido");
+                    System.out.println("Dia inválido: " + data);
                     return false;
                 }
 
             } else {
 
-                System.out.println("Mês inválido");
+                System.out.println("Mês inválido: " + data);
                 return false;
 
             }
 
         } else {
 
-            System.out.println("A data precisa do caractere '/'");
+            System.out.println("A data precisa do caractere '/': " + data);
             return false;
 
         }
@@ -488,6 +484,42 @@ public class Main {
         }
 
         
+
+    }
+
+    /* Exercício 6 */
+
+    private static void LearquivoData(File arquivo){
+
+        try(FileReader fileReader = new FileReader(arquivo)) {
+
+            try(BufferedReader bufferedReader = new BufferedReader(fileReader)){
+                
+                String quantidade_datas = bufferedReader.readLine();
+
+                String linha = "";
+
+                for(int i = 0; i < Integer.parseInt(quantidade_datas); i++){
+
+                    linha = bufferedReader.readLine();
+
+                    boolean data_valida = VerificaData(linha);
+
+                    if(data_valida){
+                        QualDia(linha, PreencheMatrizCalendario());
+                    }
+                }
+
+
+
+            }catch(Exception e){
+                System.err.println(e);
+            }
+
+            
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 
     }
 
