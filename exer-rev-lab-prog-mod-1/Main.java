@@ -8,6 +8,12 @@ public class Main {
 
     static Vector<Habilidade> HABILIDADES = new Vector<>();
     static Vector<Pessoa> PESSOAS = new Vector<>();
+    static int PESO_OBRIGATORIA = 3;
+    static int PESO_IMPORTANTE = 2;
+
+    // Serve para caso seja para comparar com outras notas, já que é reaproveitado o
+    // código para imprimir também essa nota comparada
+    static int NOTAS_COMPARAR = -1;
 
     public static void main(String[] args) {
 
@@ -25,7 +31,29 @@ public class Main {
 
     /* Útil */
 
-    private static void FlushTeclado(Scanner teclado){
+    private static String PegaHabilidade(Scanner teclado) {
+
+        boolean habilidade_existe = false;
+        int numero_tentatvias = 0;
+        String habilidade = "";
+
+        while (!habilidade_existe) {
+
+            System.out.println("Digite o nome de uma habilidade: ");
+
+            habilidade = teclado.nextLine();
+
+            habilidade_existe = HabilidadeExiste(habilidade, numero_tentatvias);
+
+            numero_tentatvias++;
+
+        }
+
+        return habilidade;
+
+    }
+
+    private static void FlushTeclado(Scanner teclado) {
 
         teclado.nextLine();
 
@@ -55,18 +83,24 @@ public class Main {
 
     }
 
-    private static int RetornaNotaMelhorCandidatoDadaUmaHabilidade(String habilidade) {
+    private static int Imprimi_AND_RetornaMetodo1(String habilidade, int maior_nota, boolean is_imprimir) {
 
-        int maior_nota = -1;
+        if (is_imprimir) {
+            System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
+        }
 
         for (int i = 0; i < PESSOAS.size(); i++) {
 
             for (int j = 0; j < HABILIDADES.size(); j++) {
 
-                if(PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade)){
+                if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade)) {
 
-                    if(PESSOAS.get(i).getHabilidades().get(j).getPontuacao() > maior_nota){
+                    if (PESSOAS.get(i).getHabilidades().get(j).getPontuacao() > maior_nota && !is_imprimir) {
                         maior_nota = PESSOAS.get(i).getHabilidades().get(j).getPontuacao();
+                    }
+
+                    if (PESSOAS.get(i).getHabilidades().get(j).getPontuacao() == maior_nota && is_imprimir) {
+                        System.out.println(PESSOAS.get(i).getNome_pessoa());
                     }
 
                 }
@@ -79,26 +113,50 @@ public class Main {
 
     }
 
-    private static void ImprimiMelhorCandidatoDadaUmaHabilidade(String habilidade, int maior_nota){
+    private static double Imprimi_AND_RetornaMetodo2(String habilidade_obrigatoria,
+            String habilidade_importante, boolean is_imprimir, double melhor_media) {
 
-        System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
+        int somatoria_notas_pessoa = 0;
+
+        if (is_imprimir) {
+            System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
+        }
 
         for (int i = 0; i < PESSOAS.size(); i++) {
 
             for (int j = 0; j < HABILIDADES.size(); j++) {
 
-                if(PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade)){
+                if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade_obrigatoria)) {
 
-                    if(PESSOAS.get(i).getHabilidades().get(j).getPontuacao() == maior_nota){
-                        System.out.println(PESSOAS.get(i).getNome_pessoa());
-                    }
+                    somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao() * PESO_OBRIGATORIA;
+
+                }
+
+                if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade_importante)) {
+
+                    somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao() * PESO_IMPORTANTE;
 
                 }
 
             }
 
+            double media_pessoa = somatoria_notas_pessoa / 2;
+
+            if (media_pessoa > melhor_media && !is_imprimir) {
+                melhor_media = media_pessoa;
+            }
+
+            if (media_pessoa == melhor_media && is_imprimir) {
+
+                System.out.println(PESSOAS.get(i).getNome_pessoa());
+
+            }
+
+            somatoria_notas_pessoa = 0;
+
         }
 
+        return melhor_media;
 
     }
 
@@ -112,10 +170,12 @@ public class Main {
 
             System.out.println("0 - Sair");
             System.out.println("1- Dada uma habilidade, mostra o melhor candidato: ");
-            System.out.println("2-");
+            System.out.println("2- Dada uma habilidade importante e uma obrigatória, mostr o melhor candidato: ");
             System.out.println("3- ");
 
             escolha = teclado.nextInt();
+
+            FlushTeclado(teclado);
 
             switch (escolha) {
 
@@ -126,6 +186,7 @@ public class Main {
                     DadaUmaHabilidade(teclado);
                     break;
                 case 2:
+                    DadaUmaHabilidadeObrigatoriaImportante(teclado);
                     break;
                 case 3:
                     break;
@@ -143,27 +204,28 @@ public class Main {
 
     private static void DadaUmaHabilidade(Scanner teclado) {
 
-        boolean habilidade_existe = false;
-        int numero_tentatvias = 0;
-        String habilidade = "";
+        String habilidade = PegaHabilidade(teclado);
 
-        FlushTeclado(teclado);
+        int maior_nota = Imprimi_AND_RetornaMetodo1(habilidade, NOTAS_COMPARAR, false);
 
-        while (!habilidade_existe) {
+        Imprimi_AND_RetornaMetodo1(habilidade, maior_nota, true);
 
-            System.out.println("Digite o nome de uma habilidade: ");
+    }
 
-            habilidade = teclado.nextLine();
+    private static void DadaUmaHabilidadeObrigatoriaImportante(Scanner teclado) {
 
-            habilidade_existe = HabilidadeExiste(habilidade, numero_tentatvias);
+        System.out.println("Habilidade Obrigatória: ");
 
-            numero_tentatvias++;
+        String habilidade_obrigatoria = PegaHabilidade(teclado);
 
-        }
+        System.out.println("Habilidade importante: ");
 
-        int maior_nota = RetornaNotaMelhorCandidatoDadaUmaHabilidade(habilidade);
+        String habilidade_importante = PegaHabilidade(teclado);
 
-        ImprimiMelhorCandidatoDadaUmaHabilidade(habilidade, maior_nota);
+        double melhor_media = Imprimi_AND_RetornaMetodo2(habilidade_obrigatoria, habilidade_importante,
+                false, NOTAS_COMPARAR);
+
+        Imprimi_AND_RetornaMetodo2(habilidade_obrigatoria, habilidade_importante, true, melhor_media);
 
     }
 
