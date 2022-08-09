@@ -13,7 +13,7 @@ public class Main {
 
     // Serve para caso seja para comparar com outras notas, já que é reaproveitado o
     // código para imprimir também essa nota comparada
-    static int NOTAS_COMPARAR = -1;
+    static double NOTAS_COMPARAR = -1;
 
     public static void main(String[] args) {
 
@@ -83,84 +83,8 @@ public class Main {
 
     }
 
-    private static int Imprimi_AND_RetornaMetodo1(String habilidade, int maior_nota, boolean is_imprimir) {
-
-        if (is_imprimir) {
-            System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
-        }
-
-        for (int i = 0; i < PESSOAS.size(); i++) {
-
-            for (int j = 0; j < HABILIDADES.size(); j++) {
-
-                if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade)) {
-
-                    if (PESSOAS.get(i).getHabilidades().get(j).getPontuacao() > maior_nota && !is_imprimir) {
-                        maior_nota = PESSOAS.get(i).getHabilidades().get(j).getPontuacao();
-                    }
-
-                    if (PESSOAS.get(i).getHabilidades().get(j).getPontuacao() == maior_nota && is_imprimir) {
-                        System.out.println(PESSOAS.get(i).getNome_pessoa());
-                    }
-
-                }
-
-            }
-
-        }
-
-        return maior_nota;
-
-    }
-
-    private static double Imprimi_AND_RetornaMetodo2(String habilidade_obrigatoria,
-            String habilidade_importante, boolean is_imprimir, double melhor_media) {
-
-        double somatoria_notas_pessoa = 0;
-
-        if (is_imprimir) {
-            System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
-        }
-
-        for (int i = 0; i < PESSOAS.size(); i++) {
-
-            for (int j = 0; j < HABILIDADES.size(); j++) {
-
-                if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade_obrigatoria)) {
-
-                    somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao() * PESO_OBRIGATORIA;
-
-                }
-
-                if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade_importante)) {
-
-                    somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao() * PESO_IMPORTANTE;
-
-                }
-
-            }
-
-            double media_pessoa = somatoria_notas_pessoa / 2;
-
-            if (media_pessoa > melhor_media && !is_imprimir) {
-                melhor_media = media_pessoa;
-            }
-
-            if (media_pessoa == melhor_media && is_imprimir) {
-
-                System.out.println(PESSOAS.get(i).getNome_pessoa());
-
-            }
-
-            somatoria_notas_pessoa = 0;
-
-        }
-
-        return melhor_media;
-
-    }
-
-    private static double Imprimi_AND_RetornaMetodo3(double melhor_media, boolean is_imprimir){
+    private static double MetodoGeral(String habilidade_obrigatoria, String habilidade_importante, double var_nota,
+            boolean is_imprimir, String metodo) {
 
         if (is_imprimir) {
             System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
@@ -172,31 +96,77 @@ public class Main {
 
             for (int j = 0; j < HABILIDADES.size(); j++) {
 
-                somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao();
-                
+                if (metodo.equals("Metodo1")) {
+
+                    if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade_obrigatoria)) {
+
+                        if (PESSOAS.get(i).getHabilidades().get(j).getPontuacao() > var_nota && !is_imprimir) {
+                            var_nota = PESSOAS.get(i).getHabilidades().get(j).getPontuacao();
+                        }
+
+                        if (PESSOAS.get(i).getHabilidades().get(j).getPontuacao() == var_nota && is_imprimir) {
+                            System.out.println(PESSOAS.get(i).getNome_pessoa());
+                        }
+
+                    }
+
+                }
+
+                if (metodo.equals("Metodo2")) {
+
+                    if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade_obrigatoria)) {
+
+                        somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao()
+                                * PESO_OBRIGATORIA;
+
+                    }
+
+                    if (PESSOAS.get(i).getHabilidades().get(j).getNome_habilidade().equals(habilidade_importante)) {
+
+                        somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao()
+                                * PESO_IMPORTANTE;
+
+                    }
+
+                }
+
+                if (metodo.equals("Metodo3")) {
+                    somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao();
+                }
+
             }
 
-            double media_pessoa = somatoria_notas_pessoa / HABILIDADES.size();
+            if (metodo.equals("Metodo2") || metodo.equals("Metodo3")) {
 
-            if(media_pessoa > melhor_media && !is_imprimir){
+                double media_pessoa = 0;
 
-                melhor_media = media_pessoa;
+                if (metodo.equals("Metodo2")) {
+
+                    media_pessoa = somatoria_notas_pessoa / 2;
+
+                } else {
+
+                    media_pessoa = somatoria_notas_pessoa / HABILIDADES.size();
+
+                }
+
+                if (media_pessoa > var_nota && !is_imprimir) {
+                    var_nota = media_pessoa;
+                }
+
+                if (media_pessoa == var_nota && is_imprimir) {
+
+                    System.out.println(PESSOAS.get(i).getNome_pessoa());
+
+                }
+
+                somatoria_notas_pessoa = 0;
 
             }
-
-            if(media_pessoa == melhor_media && is_imprimir){
-
-                System.out.println(PESSOAS.get(i).getNome_pessoa());
-
-            }
-
-            somatoria_notas_pessoa = 0;
 
         }
 
-        return melhor_media;
-
-
+        return var_nota;
     }
 
     /* Interface usuário */
@@ -246,9 +216,9 @@ public class Main {
 
         String habilidade = PegaHabilidade(teclado);
 
-        int maior_nota = Imprimi_AND_RetornaMetodo1(habilidade, NOTAS_COMPARAR, false);
+        double melhor_nota = MetodoGeral(habilidade, "", NOTAS_COMPARAR, false, "Metodo1");
 
-        Imprimi_AND_RetornaMetodo1(habilidade, maior_nota, true);
+        MetodoGeral(habilidade, "", melhor_nota, true, "Metodo1");
 
     }
 
@@ -262,20 +232,21 @@ public class Main {
 
         String habilidade_importante = PegaHabilidade(teclado);
 
-        double melhor_media = Imprimi_AND_RetornaMetodo2(habilidade_obrigatoria, habilidade_importante,
-                false, NOTAS_COMPARAR);
+        double melhor_media = MetodoGeral(habilidade_obrigatoria, habilidade_importante, NOTAS_COMPARAR, false,
+                "Metodo2");
 
-        Imprimi_AND_RetornaMetodo2(habilidade_obrigatoria, habilidade_importante, true, melhor_media);
+        MetodoGeral(habilidade_obrigatoria, habilidade_importante, melhor_media, true, "Metodo2");
+
+    }
+
+    private static void ConjuntoHabilidades() {
+
+        double melhor_media = MetodoGeral("", "", NOTAS_COMPARAR, false, "Metodo3");
+
+        MetodoGeral("","", melhor_media, true, "Metodo3");
 
     }
 
-    private static void ConjuntoHabilidades(){
-
-        double melhor_media = Imprimi_AND_RetornaMetodo3(NOTAS_COMPARAR, false);
-
-        Imprimi_AND_RetornaMetodo3(melhor_media, true);
-
-    }
     /* Testes */
 
     private static void ImprimiVectorPessoas() {
