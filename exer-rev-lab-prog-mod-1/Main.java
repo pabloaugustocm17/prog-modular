@@ -116,7 +116,7 @@ public class Main {
     private static double Imprimi_AND_RetornaMetodo2(String habilidade_obrigatoria,
             String habilidade_importante, boolean is_imprimir, double melhor_media) {
 
-        int somatoria_notas_pessoa = 0;
+        double somatoria_notas_pessoa = 0;
 
         if (is_imprimir) {
             System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
@@ -160,6 +160,45 @@ public class Main {
 
     }
 
+    private static double Imprimi_AND_RetornaMetodo3(double melhor_media, boolean is_imprimir){
+
+        if (is_imprimir) {
+            System.out.println("O(s) melhor(es) candidato(s) para a vaga é(são): ");
+        }
+
+        double somatoria_notas_pessoa = 0;
+
+        for (int i = 0; i < PESSOAS.size(); i++) {
+
+            for (int j = 0; j < HABILIDADES.size(); j++) {
+
+                somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao();
+                
+            }
+
+            double media_pessoa = somatoria_notas_pessoa / HABILIDADES.size();
+
+            if(media_pessoa > melhor_media && !is_imprimir){
+
+                melhor_media = media_pessoa;
+
+            }
+
+            if(media_pessoa == melhor_media && is_imprimir){
+
+                System.out.println(PESSOAS.get(i).getNome_pessoa());
+
+            }
+
+            somatoria_notas_pessoa = 0;
+
+        }
+
+        return melhor_media;
+
+
+    }
+
     /* Interface usuário */
 
     public static void InterfaceUsuario(Scanner teclado) {
@@ -171,7 +210,7 @@ public class Main {
             System.out.println("0 - Sair");
             System.out.println("1- Dada uma habilidade, mostra o melhor candidato: ");
             System.out.println("2- Dada uma habilidade importante e uma obrigatória, mostr o melhor candidato: ");
-            System.out.println("3- ");
+            System.out.println("3- Pessoa mais interessante para uma vaga");
 
             escolha = teclado.nextInt();
 
@@ -189,6 +228,7 @@ public class Main {
                     DadaUmaHabilidadeObrigatoriaImportante(teclado);
                     break;
                 case 3:
+                    ConjuntoHabilidades();
                     break;
                 default:
                     System.out.println("Informação inválida");
@@ -229,6 +269,13 @@ public class Main {
 
     }
 
+    private static void ConjuntoHabilidades(){
+
+        double melhor_media = Imprimi_AND_RetornaMetodo3(NOTAS_COMPARAR, false);
+
+        Imprimi_AND_RetornaMetodo3(melhor_media, true);
+
+    }
     /* Testes */
 
     private static void ImprimiVectorPessoas() {
