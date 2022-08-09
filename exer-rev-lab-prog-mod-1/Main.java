@@ -131,6 +131,11 @@ public class Main {
                 }
 
                 if (metodo.equals("Metodo3")) {
+
+                    if(PESSOAS.get(i).getHabilidades().get(j).getPontuacao() == 0){
+                        somatoria_notas_pessoa -= 3;
+                    }
+
                     somatoria_notas_pessoa += PESSOAS.get(i).getHabilidades().get(j).getPontuacao();
                 }
 
@@ -243,7 +248,7 @@ public class Main {
 
         double melhor_media = MetodoGeral("", "", NOTAS_COMPARAR, false, "Metodo3");
 
-        MetodoGeral("","", melhor_media, true, "Metodo3");
+        MetodoGeral("", "", melhor_media, true, "Metodo3");
 
     }
 
