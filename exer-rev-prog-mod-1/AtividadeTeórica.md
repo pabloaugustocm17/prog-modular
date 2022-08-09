@@ -12,4 +12,4 @@
 
     c)  O objeto do tipo 'candidato' possuí um vetor estático ou uma lista de 'habilidades'. A estrutura também contém um objeto do tipo vaga com um vetôr dinâmico ou fila de candidatos, com um método realizando o cálculo das habilidades, determinando quem é mais apto.
 
-    d) 
+    d) O Posto de saúde deve possuir uma fila de pacientes, onde esses pacientes devem levar seu prontuário para a verificação por parte do posto em relação ao seu calendário anual.
