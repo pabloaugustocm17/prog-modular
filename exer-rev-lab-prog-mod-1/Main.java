@@ -14,9 +14,10 @@ public class Main {
 
         LeArquivoHabilidades(RetornaArquivo("C:\\Users\\Pablo Magalhães\\Documents\\GitHub\\prog-modular\\exer-rev-lab-prog-mod-1\\file-pessoas.txt"), false);
 
-        ImprimiVectorPessoas();
 
     }
+
+    /* Testes */
 
     private static void ImprimiVectorPessoas(){
 
@@ -48,19 +49,21 @@ public class Main {
 
     }
 
+    /* Operações Vector */
+
     private static void AddPessoaEmVectorPessoa(String linha){
 
         String[] informacoes_linha = linha.split(";");
 
         Pessoa pessoa_adicionar = new Pessoa(informacoes_linha[0]);
 
-        pessoa_adicionar.setHabilidades(HABILIDADES);
-
         for(int i = 0; i < HABILIDADES.size(); i++){
 
-            double nota = Integer.parseInt(informacoes_linha[i+1]);
+            int nota = Integer.parseInt(informacoes_linha[i+1]);
 
-            pessoa_adicionar.getHabilidades().get(i).setPontuacao(nota);
+            Habilidade habilidade_add = new Habilidade(HABILIDADES.get(i).getNome_habilidade(), nota);
+
+            pessoa_adicionar.addHabilidade(habilidade_add);
 
         }
 
@@ -75,6 +78,8 @@ public class Main {
         HABILIDADES.add(habilidade_adicionar);
 
     }
+
+    /* Arquivos */
 
     private static File RetornaArquivo(String path){
 

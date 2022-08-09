@@ -34,6 +34,11 @@ public class Pessoa {
         this.habilidades = habilidades;
     }
 
+    public void addHabilidade(Habilidade habilidade_add){
+
+        this.habilidades.add(habilidade_add);
+
+    }
     
 
     

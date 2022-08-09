@@ -1,13 +1,20 @@
 class Habilidade {
 
     private String nome_habilidade;
-    private double pontuacao;
+    private int pontuacao;
     
     
     public Habilidade(String nome_habilidade) {
         
         this.nome_habilidade = nome_habilidade;
-        this.pontuacao = 0.0;
+        this.pontuacao = 0;
+
+    }
+
+    public Habilidade(String nome_habilidade, int pontuacao) {
+        
+        this.nome_habilidade = nome_habilidade;
+        this.pontuacao = pontuacao;
 
     }
 
@@ -22,12 +29,12 @@ class Habilidade {
     }
 
 
-    public double getPontuacao() {
+    public int getPontuacao() {
         return pontuacao;
     }
 
 
-    public void setPontuacao(double pontuacao) {
+    public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
     }
 
