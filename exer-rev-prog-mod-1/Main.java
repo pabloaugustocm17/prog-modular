@@ -30,7 +30,7 @@ public class Main {
 
     public static void ExercicioBasicos(Scanner teclado) {
 
-        int[] vetor = CriaVetor(7, teclado);
+        int[] vetor = CriaVetor(6, teclado);
 
         ImprimiVetor(vetor);
 

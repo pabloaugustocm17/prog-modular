@@ -6,6 +6,7 @@ import java.util.Vector;
 
 public class Main {
 
+    
     static Vector<Habilidade> HABILIDADES = new Vector<>();
     static Vector<Pessoa> PESSOAS = new Vector<>();
     static int PESO_OBRIGATORIA = 3;
