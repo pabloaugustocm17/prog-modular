@@ -33,8 +33,10 @@ public class MicroOndas {
 
     }
 
-    public Tempo getCronometro() {
-        return cronometro;
+    public void MostraCronometro(){
+
+        this.cronometro.ImprimiTempo();
+
     }
 
     public boolean IsFechado() {

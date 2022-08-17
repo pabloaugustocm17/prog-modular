@@ -36,6 +36,29 @@ class Tempo {
 
     }
 
+    public void ImprimiTempo(){
+
+        if(this.horas < 10){
+            System.out.print("0" + this.horas + ":");
+        }else{
+            System.out.print(this.horas + ":");
+        }
+
+        if(this.minutos < 10){
+            System.out.print("0" + this.minutos + ":");
+        }else{
+            System.out.print(this.minutos + ":");
+        }
+
+        if(this.segundos < 10){
+            System.out.print("0" + this.segundos);
+        }else{
+            System.out.print(this.segundos);
+        }
+
+
+    }
+
     private boolean Verificacao60(int valor, boolean is_segundos) {
 
         if (valor >= 60 || valor < 0) {
@@ -89,8 +112,8 @@ class Tempo {
 
             if (soma_tempo_menor >= 60) {
 
-                tempo_maior_adicionar = soma_tempo_menor % 60;
-                tempo_menor_adicionar = soma_tempo_menor - (60 * tempo_maior_adicionar);
+                tempo_maior_adicionar = soma_tempo_menor / 60;
+                tempo_menor_adicionar = soma_tempo_menor % 60;
                 tempo_maior_adicionar += tempo_maior_atual;
 
             } else {
