@@ -24,10 +24,6 @@ public class MicroOndas {
                 this.cronometro.AdicionaTempo(tempo_adicionar, "Minutos");
                 break;
 
-            case "Horas":
-                this.cronometro.AdicionaTempo(tempo_adicionar, "Horas");
-                break;
-
         }
 
 

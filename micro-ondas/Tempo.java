@@ -28,10 +28,6 @@ class Tempo {
                 AtualizarTempo(tempo_adicionar, false);
                 break;
 
-            case "Horas":
-                AtualizarHoras(tempo_adicionar);
-                break;
-
         }
 
     }
