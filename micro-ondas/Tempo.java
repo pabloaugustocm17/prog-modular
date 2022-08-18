@@ -47,9 +47,9 @@ class Tempo {
         }
 
         if(this.segundos < 10){
-            System.out.print("0" + this.segundos);
+            System.out.println("0" + this.segundos);
         }else{
-            System.out.print(this.segundos);
+            System.out.println(this.segundos);
         }
 
 
@@ -64,7 +64,7 @@ class Tempo {
             if (is_segundos) {
                 System.out.print("segundos ");
             } else {
-                System.out.print(" minutos ");
+                System.out.print("minutos ");
             }
 
             System.out.println("informados estão errados");
@@ -131,4 +131,13 @@ class Tempo {
 
     }
 
+    public boolean PausaTempo(){
+
+        if(this.segundos == 0 && this.minutos == 0 && this.horas == 0){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
 }
