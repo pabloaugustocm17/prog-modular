@@ -36,11 +36,11 @@ public class Main {
                     break;
 
                 case "1":
-                    LigarMicroOndas(teclado);
+                    MICRO_ONDAS.LigarMicroOndas(teclado);
                     break;
 
                 case "2":
-                    PausarTempo();
+                    MICRO_ONDAS.PausarTempo();
                     break;
 
                 case "3":
@@ -52,7 +52,7 @@ public class Main {
                     break;
 
                 case "5":
-
+                    MICRO_ONDAS.DesligarMicroOndas();
                     break;
                 default:
                     System.out.println("Informações erradas");
@@ -62,20 +62,8 @@ public class Main {
 
     }
 
-    /* Útil */
+    
 
-    /* Métodos MicroOndas */
 
-    private static void LigarMicroOndas(Scanner teclado){
-
-        MICRO_ONDAS.LigarMicroOndas(teclado);
-
-    }
-
-    private static void PausarTempo(){
-
-        MICRO_ONDAS.PausarTempo();
-
-    }
 
 }

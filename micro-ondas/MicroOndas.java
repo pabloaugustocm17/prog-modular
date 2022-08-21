@@ -6,6 +6,8 @@ public class MicroOndas {
     private boolean is_fechado;
     private boolean is_funcionando;
 
+    /* Construtor */
+
     private void init() {
         this.cronometro = new Tempo();
         this.is_fechado = true;
@@ -16,37 +18,15 @@ public class MicroOndas {
         init();
     }
 
-    private void AdicionarTempo(int tempo_adicionar, String valor_atualizado) {
-
-        switch (valor_atualizado) {
-
-            case "Segundos":
-                this.cronometro.AdicionaTempo(tempo_adicionar, "Segundos");
-                break;
-
-            case "Minutos":
-                this.cronometro.AdicionaTempo(tempo_adicionar, "Minutos");
-                break;
-
-        }
-
-    }
-
-    private void MostraCronometro() {
-
-        this.cronometro.ImprimiTempo();
-
-    }
+    /* Métodos Públicos */
 
     public void PausarTempo() {
 
         if (cronometro.PausaTempo()) {
-
-            System.out.println("Tempo pausado em: ");
+            MetodosUtil.ImprimiMensagem("Tempo pausado em: ");
             this.MostraCronometro();
-
         } else {
-            System.out.println("O micro ondas está desligado");
+            MetodosUtil.ImprimiMensagem("O micro ondas está desligado");
         }
 
     }
@@ -61,6 +41,34 @@ public class MicroOndas {
         } else {
             MetodosUtil.ImprimiMensagem("O micro-ondas já está em funcionamento");
         }
+
+    }
+
+    public void DesligarMicroOndas() {
+
+        this.cronometro.ZerarTempo();
+
+    }
+
+    /* Métodos Privados */
+
+    /**
+     * @param tempo_adicionar -> envia o tempo a ser adicionado ao cronometro
+     * @param valor_atualizado -> recebe qual unidade de tempo é para ser atualizada
+     */
+    private void AdicionarTempo(int tempo_adicionar, String valor_atualizado) {
+
+        if(valor_atualizado.equals(MetodosUtil.SEGUNDOS)){
+            this.cronometro.AdicionaTempo(tempo_adicionar, MetodosUtil.SEGUNDOS);
+        }else if(valor_atualizado.equals(MetodosUtil.MINUTOS)){
+            this.cronometro.AdicionaTempo(tempo_adicionar, MetodosUtil.MINUTOS);
+        }
+
+    }
+
+    private void MostraCronometro() {
+
+        this.cronometro.ImprimiTempo();
 
     }
 
@@ -109,9 +117,9 @@ public class MicroOndas {
 
         } while (!verificacao);
 
-        AdicionarTempo(segundos, "Segundos");
-        AdicionarTempo(minutos, "Minutos");
-        
+        AdicionarTempo(segundos, MetodosUtil.SEGUNDOS);
+        AdicionarTempo(minutos, MetodosUtil.MINUTOS);
 
     }
+
 }
