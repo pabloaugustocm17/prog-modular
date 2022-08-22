@@ -38,15 +38,15 @@ class Tempo {
     public void ImprimiTempo() {
 
         if (this.horas < 10) {
-            MetodosUtil.ImprimiMensagem("0" + this.horas + ":");
+            System.out.print("0" + this.horas + ":");
         } else {
-            MetodosUtil.ImprimiMensagem(this.horas + ":");
+            System.out.print(this.horas + ":");
         }
 
         if (this.minutos < 10) {
-            MetodosUtil.ImprimiMensagem("0" + this.minutos + ":");
+            System.out.print("0" + this.minutos + ":");
         } else {
-            MetodosUtil.ImprimiMensagem(this.minutos + ":");
+            System.out.print(this.minutos + ":");
         }
 
         if (this.segundos < 10) {
@@ -88,7 +88,7 @@ class Tempo {
                 System.out.print("minutos ");
             }
 
-            System.out.println("informados estão errados");
+            MetodosUtil.ImprimiMensagem("informados estão errados");
 
             return false;
 

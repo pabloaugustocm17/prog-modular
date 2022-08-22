@@ -19,19 +19,19 @@ public class Main {
 
         while (escolha != null) {
 
-            System.out.println("0 - Sair");
-            System.out.println("1 - Ligar");
-            System.out.println("2 - Pausar");
-            System.out.println("3 - Retomar");
-            System.out.println("4 - Adicionar mais tempo");
-            System.out.println("5 - Desligar");
+            MetodosUtil.ImprimiMensagem("0 - Sair");
+            MetodosUtil.ImprimiMensagem("1 - Ligar");
+            MetodosUtil.ImprimiMensagem("2 - Pausar");
+            MetodosUtil.ImprimiMensagem("3 - Retomar");
+            MetodosUtil.ImprimiMensagem("4 - Adicionar mais tempo");
+            MetodosUtil.ImprimiMensagem("5 - Desligar");
 
             escolha = teclado.nextLine();
 
             switch (escolha) {
 
                 case "0":
-                    System.out.println("Saindo");
+                    MetodosUtil.ImprimiMensagem("Saindo");
                     escolha = null;
                     break;
 
@@ -55,7 +55,7 @@ public class Main {
                     MICRO_ONDAS.DesligarMicroOndas();
                     break;
                 default:
-                    System.out.println("Informações erradas");
+                    MetodosUtil.ImprimiMensagemErro("Informações erradas");
             }
 
         }
