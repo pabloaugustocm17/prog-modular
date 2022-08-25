@@ -31,11 +31,7 @@ public class Main {
             switch (escolha) {
 
                 case "0":
-<<<<<<< Updated upstream
-                    MetodosUtil.ImprimiMensagem("Saindo");
-=======
-                MetodosUtil.ImprimiMensagem("Saindo...");
->>>>>>> Stashed changes
+                    MetodosUtil.ImprimiMensagem("Saindo...");
                     escolha = null;
                     break;
 
@@ -58,19 +54,11 @@ public class Main {
                     MICRO_ONDAS.DesligarMicroOndas();
                     break;
                 default:
-<<<<<<< Updated upstream
-                    MetodosUtil.ImprimiMensagemErro("Informações erradas");
-=======
                 MetodosUtil.ImprimiMensagemErro("Informações Erradas");
->>>>>>> Stashed changes
             }
 
         }
 
     }
-
-    
-
-
 
 }
