@@ -50,6 +50,12 @@ public class MicroOndas {
 
     }
 
+    public void AdicionaTempo(Scanner teclado){
+
+        this.AdicionarTempo(teclado);
+        
+    }
+
     /* Métodos Privados */
 
     /**

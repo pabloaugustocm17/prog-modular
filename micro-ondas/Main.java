@@ -44,13 +44,12 @@ public class Main {
                     break;
 
                 case "3":
-
+                    
                     break;
 
                 case "4":
-
+                    MICRO_ONDAS.AdicionaTempo(teclado);
                     break;
-
                 case "5":
                     MICRO_ONDAS.DesligarMicroOndas();
                     break;
