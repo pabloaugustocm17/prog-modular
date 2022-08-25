@@ -23,10 +23,18 @@ public class MicroOndas {
     public void PausarTempo() {
 
         if (cronometro.PausaTempo()) {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             MetodosUtil.ImprimiMensagem("Tempo pausado em: ");
             this.MostraCronometro();
         } else {
+<<<<<<< Updated upstream
             MetodosUtil.ImprimiMensagem("O micro ondas está desligado");
+=======
+            MetodosUtil.ImprimiMensagemErro("O Micro-Ondas está desligado");
+>>>>>>> Stashed changes
         }
 
     }
@@ -39,7 +47,7 @@ public class MicroOndas {
             is_funcionando = true;
 
         } else {
-            MetodosUtil.ImprimiMensagem("O micro-ondas já está em funcionamento");
+            MetodosUtil.ImprimiMensagemErro("O micro-ondas já está em funcionamento");
         }
 
     }
