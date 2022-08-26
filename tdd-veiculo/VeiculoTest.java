@@ -12,7 +12,7 @@ public class VeiculoTest {
         
         Main.ImprimiMensagem("Cria Carro");
 
-        Veiculo veiculo = new Veiculo("123456", "123456", 12, 13);
+        Veiculo veiculo = new Veiculo("123456", "123456", 12, 13, 120);
 
         assertEquals(veiculo, Veiculo.CriaVeiculo());
         
