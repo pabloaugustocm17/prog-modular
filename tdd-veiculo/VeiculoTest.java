@@ -6,7 +6,7 @@ public class VeiculoTest {
     private Veiculo veiculo;
 
     public VeiculoTest(){
-        this.veiculo = new Veiculo("123-7894", 500 , 120);
+        this.veiculo = Veiculo.CriaVeiculo();
     }
 
     @Test
