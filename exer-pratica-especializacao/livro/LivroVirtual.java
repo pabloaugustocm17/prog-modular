@@ -9,7 +9,7 @@ public class LivroVirtual extends Livro {
     }
 
     @Override
-    protected double calculaPrecoLivro() {
+    public double calculaPrecoLivro() {
 
         return this.getValor_inicial() + this.getDiretos_autorais();
     

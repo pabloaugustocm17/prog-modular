@@ -1,15 +1,19 @@
+package app;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import autor.Autor;
 import livro.Livro;
+import venda.Venda;
 
 public class Main{
 
     private final static Scanner teclado = new Scanner(System.in);
     private static List<Autor> autores = new ArrayList<>();
+    public static List<Venda> vendas = new ArrayList<>();
     public static List<Livro> livros = new ArrayList<>();
+
 
     public static void main(String[] args) {
         
@@ -52,6 +56,7 @@ public class Main{
                 localizar("autor");
                 return true;
             case "3":
+                registraVenda();
                 return true;
             default:
                 System.out.println("Informação inválida");
@@ -125,21 +130,23 @@ public class Main{
     /**
      * @param nome_livro -> recebe o nome do livro à ser procurado
      */
-    private static void procuraLivro(String nome_livro){
+    private static Livro procuraLivro(String nome_livro){
 
         boolean isLivroAchado = false;
-
+        
         for(Livro livro_analisar : livros){
             if(livro_analisar.getNome_livro().equals(nome_livro)){
                 isLivroAchado = true;
                 livro_analisar.imprimiLivro();
-                break;
+                return livro_analisar;
             }
         }
 
         if(!isLivroAchado){
             System.out.println("Livro não existe");
         }
+
+        return null;
 
     }
 
@@ -168,4 +175,27 @@ public class Main{
 
     /* Venda para livro */
 
+    /**
+     * 
+     * Registra venda de um certo livro
+     * 
+     */
+    private static void registraVenda(){
+
+        System.out.println("Informe o nome do livro que deseja comprar: ");
+        String nome_livro = teclado.nextLine();
+        Livro livro_vendido = procuraLivro(nome_livro);
+
+        if(livro_vendido != null){
+            
+            System.out.println("Informe a quantidade de livros que será comprado: ");
+            int quantidade_livros = teclado.nextInt();
+            vendas.add(new Venda(quantidade_livros, livro_vendido));
+
+
+        }else{
+            System.out.println("Compra não pode ser realizada");
+        }
+
+    }
 }

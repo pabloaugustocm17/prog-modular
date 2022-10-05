@@ -14,7 +14,7 @@ public class LivroFisico extends Livro {
 
 
     @Override
-    protected double calculaPrecoLivro() {
+    public double calculaPrecoLivro() {
         
         double preco_total_paginas = preco_paginas * this.getQuantidade_paginas();
 

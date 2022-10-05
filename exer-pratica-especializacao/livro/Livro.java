@@ -9,7 +9,6 @@ public abstract class Livro{
     private int quantidade_paginas;
     private Autor autor_livro;
     private double direitos_autorais;
-    private int quantidade_vendas;
 
     /* Métodos abstratos */
 
@@ -17,18 +16,7 @@ public abstract class Livro{
     /**
      * @return -> retorna o preco que o livro irá custar no final
      */
-    protected abstract double calculaPrecoLivro();
-
-    /* Métodos gerais */
-
-    /**
-     * @return -> calcula o total arrecadado pelo livro com suas vendas
-     */
-    protected double calculaTotalArrecadado(){
-
-        return this.quantidade_vendas * this.calculaPrecoLivro();
-
-    }
+    public abstract double calculaPrecoLivro();
 
     /**
      * 
@@ -54,6 +42,7 @@ public abstract class Livro{
         this.autor_livro = autor_livro;
         this.direitos_autorais = valor_inicial * 0.08;
         this.quantidade_paginas = 0 ;
+
     }
 
     public Livro(String nome_livro, double valor_inicial, int quantidade_paginas,
@@ -80,6 +69,8 @@ public abstract class Livro{
         return this.nome_livro;
     }
     
-
+    public Autor getAutor_livro(){
+        return this.autor_livro;
+    }
 
 }

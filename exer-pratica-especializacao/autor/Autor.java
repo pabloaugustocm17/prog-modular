@@ -1,16 +1,12 @@
 package autor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import app.Main;
 import livro.Livro;
+import venda.Venda;
 
 public class Autor {
     
     private String nome_autor;
-    //private List<Livro> livros_autor;
-
 
     /* Métodos */
 
@@ -44,6 +40,48 @@ public class Autor {
 
     public String getNome_autor(){
         return this.nome_autor;
+    }
+
+    /* Métodos privados */
+
+    /**
+     * @return -> retorna o total arrecadado dos direitos autorais de um certo autor
+     */
+    private double totalArrecadadoDireitosAutorais(){
+
+        double total_direitos_autorais = 0;
+
+        for(Livro livros : Main.livros){
+
+            if(livros.getAutor_livro().equals(this)){
+
+                total_direitos_autorais += livros.getDiretos_autorais();
+
+            }
+
+        }
+
+        return total_direitos_autorais;
+
+    }
+
+    /**
+     * @return -> retorna o total arrecadado pelo autor
+     */
+    private double totalArrecadado(){
+
+        double total_arrecadado = 0;
+
+        for(Venda vendas : Main.vendas){
+
+            if(vendas.getLivro_vendido().getAutor_livro().equals(this)){
+                total_arrecadado += vendas.getValor_venda();
+            }
+
+        }
+
+        return total_arrecadado;
+
     }
 
 }
