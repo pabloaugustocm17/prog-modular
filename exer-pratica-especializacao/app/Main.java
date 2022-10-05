@@ -11,8 +11,8 @@ public class Main{
 
     private final static Scanner teclado = new Scanner(System.in);
     private static List<Autor> autores = new ArrayList<>();
-    public static List<Venda> vendas = new ArrayList<>();
-    public static List<Livro> livros = new ArrayList<>();
+    private static List<Venda> vendas = new ArrayList<>();
+    private static List<Livro> livros = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -162,7 +162,7 @@ public class Main{
         for(Autor autor_analisar : autores){
             if(autor_analisar.getNome_autor().equals(nome_autor)){
                 isAutorAchado = true;
-                autor_analisar.imprimiAutor();
+                autor_analisar.imprimiAutor(livros);
                 break;
             }
         }

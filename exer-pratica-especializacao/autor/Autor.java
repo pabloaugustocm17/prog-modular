@@ -1,6 +1,7 @@
 package autor;
 
-import app.Main;
+import java.util.List;
+
 import livro.Livro;
 import venda.Venda;
 
@@ -10,12 +11,12 @@ public class Autor {
 
     /* Métodos */
 
-    public void imprimiAutor(){
+    public void imprimiAutor(List<Livro> livros){
 
         System.out.println("Nome autor: " + this.nome_autor);
         System.out.println("Livros do autor: ");
 
-        for(Livro livro : Main.livros){
+        for(Livro livro : livros){
 
             livro.imprimiLivro();
             System.out.println("-------------------------");
@@ -42,20 +43,33 @@ public class Autor {
         return this.nome_autor;
     }
 
+    /* Métodos públicos */
+
+    public double retornaTotalArrecadadoDireitosAutorais(List<Livro> livros){
+    
+        return totalArrecadadoDireitosAutorais(livros);
+
+    }
+
+    public double retornaTotalArrecadado(List<Venda> vendas){
+
+        return totalArrecadado(vendas);
+    }
+
     /* Métodos privados */
 
     /**
      * @return -> retorna o total arrecadado dos direitos autorais de um certo autor
      */
-    private double totalArrecadadoDireitosAutorais(){
+    private double totalArrecadadoDireitosAutorais(List<Livro> livros){
 
         double total_direitos_autorais = 0;
 
-        for(Livro livros : Main.livros){
+        for(Livro livro : livros){
 
-            if(livros.getAutor_livro().equals(this)){
+            if(livro.getAutor_livro().equals(this)){
 
-                total_direitos_autorais += livros.getDiretos_autorais();
+                total_direitos_autorais += livro.getDiretos_autorais();
 
             }
 
@@ -68,14 +82,14 @@ public class Autor {
     /**
      * @return -> retorna o total arrecadado pelo autor
      */
-    private double totalArrecadado(){
+    private double totalArrecadado(List<Venda> vendas){
 
         double total_arrecadado = 0;
 
-        for(Venda vendas : Main.vendas){
+        for(Venda venda : vendas){
 
-            if(vendas.getLivro_vendido().getAutor_livro().equals(this)){
-                total_arrecadado += vendas.getValor_venda();
+            if(venda.getLivro_vendido().getAutor_livro().equals(this)){
+                total_arrecadado += venda.getValor_venda();
             }
 
         }

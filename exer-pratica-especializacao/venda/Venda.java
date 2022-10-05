@@ -14,7 +14,7 @@ public class Venda {
 
         this.quantidade_vendas = quantidade_vendas;
         this.livro_vendido = livro_vendido;
-        this.valor_venda = quantidade_vendas * livro_vendido.calculaPrecoLivro();
+        this.valor_venda = this.quantidade_vendas * livro_vendido.calculaPrecoLivro();
     }
 
     public Venda(int quantidade_vendas, Livro livro_vendido){
