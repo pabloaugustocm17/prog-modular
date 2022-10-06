@@ -1,0 +1,2 @@
+Admiravel Mundo Novo;40;100;Aldous;Virtual
+Arte da Guerra;40;300;Sun Tzu;Fisico;10

@@ -18,17 +18,19 @@ public abstract class Livro{
      */
     public abstract double calculaPrecoLivro();
 
+   
     /**
-     * 
-     *  Método para imprimir o livro
-     * 
+     * @param isNomeAutor -> caso seja para mostrar o nome do autor a variável é true;
      */
-    public void imprimiLivro(){
+    public void imprimiLivro(boolean isNomeAutor){
 
-        System.out.println("Nome livro: " + this.nome_livro);
+        System.out.println("\nNome livro: " + this.nome_livro);
         System.out.println("Quantidade de páginas: " + this.quantidade_paginas);
-        System.out.println("Nome do autor: " + autor_livro.getNome_autor());
+        System.out.println("Valor: " + this.calculaPrecoLivro() + "$");
 
+        if(isNomeAutor){
+            System.out.println("Nome do autor: " + this.autor_livro.getNome_autor());
+        }
     }
 
     /* Construtores */
@@ -39,9 +41,8 @@ public abstract class Livro{
         this.nome_livro = nome_livro;
         this.valor_inicial = valor_inicial;
         this.quantidade_paginas = quantidade_paginas;
-        this.autor_livro = autor_livro;
         this.direitos_autorais = valor_inicial * 0.08;
-        this.quantidade_paginas = 0 ;
+        this.autor_livro = autor_livro;
 
     }
 

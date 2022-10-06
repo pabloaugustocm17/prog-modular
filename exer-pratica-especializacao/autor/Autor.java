@@ -11,16 +11,30 @@ public class Autor {
 
     /* Métodos */
 
-    public void imprimiAutor(List<Livro> livros){
+    public void imprimiAutor(List<Livro> livros, List<Venda> vendas){
 
-        System.out.println("Nome autor: " + this.nome_autor);
-        System.out.println("Livros do autor: ");
+        System.out.println("\nNome autor: " + this.nome_autor);
 
-        for(Livro livro : livros){
+        if(livros.size() > 0){
 
-            livro.imprimiLivro();
-            System.out.println("-------------------------");
+            System.out.println("Livros do autor: ");
 
+            for(Livro livro : livros){
+
+                if(livro.getAutor_livro().equals(this)){
+
+                    livro.imprimiLivro(false);
+                    System.out.println("-------------------------");
+
+                }    
+            }
+    
+            System.out.println("Total arrecadado com direitos autorais: " 
+            + this.retornaTotalArrecadadoDireitosAutorais(vendas) + "$");
+            System.out.println("Total arrecadado: " + this.retornaTotalArrecadado(vendas) + "$\n");
+
+        }else{
+            System.out.println("\nSem livros registrados\n");
         }
 
     }
@@ -45,9 +59,9 @@ public class Autor {
 
     /* Métodos públicos */
 
-    public double retornaTotalArrecadadoDireitosAutorais(List<Livro> livros){
+    public double retornaTotalArrecadadoDireitosAutorais(List<Venda> vendas){
     
-        return totalArrecadadoDireitosAutorais(livros);
+        return totalArrecadadoDireitosAutorais(vendas);
 
     }
 
@@ -61,20 +75,21 @@ public class Autor {
     /**
      * @return -> retorna o total arrecadado dos direitos autorais de um certo autor
      */
-    private double totalArrecadadoDireitosAutorais(List<Livro> livros){
+    private double totalArrecadadoDireitosAutorais(List<Venda> vendas){
 
         double total_direitos_autorais = 0;
 
-        for(Livro livro : livros){
+        for(Venda venda : vendas){
 
-            if(livro.getAutor_livro().equals(this)){
+            if(venda.getLivro_vendido().getAutor_livro().equals(this)){
 
-                total_direitos_autorais += livro.getDiretos_autorais();
+                total_direitos_autorais += venda.getLivro_vendido().getDiretos_autorais() * 
+                    venda.getQuantidade_vendas();
 
             }
 
         }
-
+        
         return total_direitos_autorais;
 
     }

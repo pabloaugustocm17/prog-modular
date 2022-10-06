@@ -1,10 +1,16 @@
 package app;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import autor.Autor;
 import livro.Livro;
+import livro.LivroFisico;
+import livro.LivroVirtual;
 import venda.Venda;
 
 public class Main{
@@ -14,19 +20,23 @@ public class Main{
     private static List<Venda> vendas = new ArrayList<>();
     private static List<Livro> livros = new ArrayList<>();
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, IOException {
         
-        leArquivos("","");
+        leArquivos("C:\\Users\\Pablo Magalhães\\Documents\\GitHub\\prog-modular" +
+         "\\exer-pratica-especializacao\\resources\\autores.txt",
+         "autor");
+
+        leArquivos("C:\\Users\\Pablo Magalhães\\Documents\\GitHub\\" +
+        "prog-modular\\exer-pratica-especializacao\\resources\\livros.txt",
+        "livro");
+
         interfaceUsuario();
-
-
 
     }
 
     /* Métodos Públicos */
 
-    public static void interfaceUsuario(){
+    public static void interfaceUsuario() throws InterruptedException, IOException{
 
         String escolha;
         boolean continuar = true;
@@ -43,7 +53,10 @@ public class Main{
 
     /* Métodos Privados */
 
-    private static boolean trataOpcoes(String opcao){
+    private static boolean trataOpcoes(String opcao) throws InterruptedException, IOException{
+
+        //Limpar Tela
+        limparTela();
 
         switch(opcao){
 
@@ -62,7 +75,6 @@ public class Main{
                 System.out.println("Informação inválida");
                 return true;
         }
-
     }
 
     /**
@@ -73,7 +85,67 @@ public class Main{
      * 
      */
     private static void leArquivos(String path, String tipo){
+        
+        File file = new File(path);
 
+        try(FileReader fileReader = new FileReader(file)){
+
+            try(BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+                String linha = bufferedReader.readLine();
+
+                while(linha != null){
+
+                    if(tipo.equals("autor")){
+
+                        autores.add(new Autor(linha));
+
+                    }else if(tipo.equals("livro")){
+
+                        String[] dados = linha.split(";");
+
+                        String nome_livro = dados[0];
+                        double valor_inical = Double.parseDouble(dados[1]);
+                        int quantidade_paginas = Integer.parseInt(dados[2]);
+                        String nome_autor = dados[3];
+                        String tipo_livro = dados[4];
+
+                        Autor autor = procuraAutor(nome_autor, false);
+
+                        if(autor != null){
+                            if(tipo_livro.equals("Fisico")){
+
+                                double preco_adicional = Double.parseDouble(dados[5]);
+
+                                livros.add(new LivroFisico(nome_livro, valor_inical, quantidade_paginas
+                                , autor, preco_adicional));
+
+                            }else if(tipo_livro.equals("Virtual")){
+
+                                livros.add(
+                                    new LivroVirtual(nome_livro, valor_inical, quantidade_paginas
+                                    , autor));
+
+                            }
+                        }else{
+                            System.out.println("Autor inválido");
+                        }
+                    }
+
+                    linha = bufferedReader.readLine();
+
+                }
+
+
+
+            }catch(Exception e){
+                System.out.println(e);
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
 
 
     }
@@ -105,13 +177,13 @@ public class Main{
 
         do{
 
-            System.out.println("Informe o nomeque deseja buscar: ");
+            System.out.println("Informe o nome que deseja buscar: ");
             nome = teclado.nextLine();
 
             if(tipo.equals("livro")){
-                procuraLivro(nome);
+                procuraLivro(nome, true);
             }else if(tipo.equals("autor")){
-                procuraAutor(nome);
+                procuraAutor(nome,true);
             }
 
             System.out.println("Deseja procurar outro (digite S/N): ");
@@ -130,21 +202,20 @@ public class Main{
     /**
      * @param nome_livro -> recebe o nome do livro à ser procurado
      */
-    private static Livro procuraLivro(String nome_livro){
+    private static Livro procuraLivro(String nome_livro, boolean isImprimir){
 
-        boolean isLivroAchado = false;
-        
         for(Livro livro_analisar : livros){
             if(livro_analisar.getNome_livro().equals(nome_livro)){
-                isLivroAchado = true;
-                livro_analisar.imprimiLivro();
+                if(isImprimir){
+                    livro_analisar.imprimiLivro(true);
+                }
                 return livro_analisar;
             }
         }
 
-        if(!isLivroAchado){
-            System.out.println("Livro não existe");
-        }
+       
+        System.out.println("Livro não existe");
+        
 
         return null;
 
@@ -155,22 +226,22 @@ public class Main{
     /**
      * @param nome_autor -> recebe o nome do autor à ser procurado
      */
-    private static void procuraAutor(String nome_autor){
-
-        boolean isAutorAchado = false;
+    private static Autor procuraAutor(String nome_autor, boolean isImprimir){
 
         for(Autor autor_analisar : autores){
             if(autor_analisar.getNome_autor().equals(nome_autor)){
-                isAutorAchado = true;
-                autor_analisar.imprimiAutor(livros);
-                break;
+                
+                if(isImprimir){
+                    autor_analisar.imprimiAutor(livros, vendas);
+                }
+
+                return autor_analisar;
             }
         }
 
-        if(!isAutorAchado){
-            System.out.println("Autors não existe");
-        }
+        System.out.println("Autors não existe");
 
+        return null;
     }
 
     /* Venda para livro */
@@ -184,18 +255,29 @@ public class Main{
 
         System.out.println("Informe o nome do livro que deseja comprar: ");
         String nome_livro = teclado.nextLine();
-        Livro livro_vendido = procuraLivro(nome_livro);
+        Livro livro_vendido = procuraLivro(nome_livro, false);
 
         if(livro_vendido != null){
             
             System.out.println("Informe a quantidade de livros que será comprado: ");
             int quantidade_livros = teclado.nextInt();
             vendas.add(new Venda(quantidade_livros, livro_vendido));
-
+            teclado.nextLine();
 
         }else{
             System.out.println("Compra não pode ser realizada");
         }
 
+    }
+
+    /* Útil */
+
+    /**
+     * 
+     * Método para limpar a tela
+     * 
+     */
+    private static void limparTela() throws InterruptedException, IOException{
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 }

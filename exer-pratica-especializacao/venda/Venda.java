@@ -31,4 +31,7 @@ public class Venda {
         return this.valor_venda;
     }
 
+    public int getQuantidade_vendas(){
+        return this.quantidade_vendas;
+    }
 }
