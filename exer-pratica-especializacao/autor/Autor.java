@@ -70,6 +70,22 @@ public class Autor {
         return totalArrecadado(vendas);
     }
 
+    public static Autor retornaAutor(List<Autor> autores, String nome_autor){
+
+        for(Autor autor : autores){
+
+            if(autor.getNome_autor().equals(nome_autor)){
+                return autor;
+            }
+
+        }
+
+        Autor autor_enviar = new Autor(nome_autor);
+        autores.add(autor_enviar);
+        return autor_enviar;
+
+    }
+
     /* Métodos privados */
 
     /**

@@ -23,12 +23,8 @@ public class Main{
     public static void main(String[] args) throws InterruptedException, IOException {
         
         leArquivos("C:\\Users\\Pablo Magalhães\\Documents\\GitHub\\prog-modular" +
-         "\\exer-pratica-especializacao\\resources\\autores.txt",
-         "autor");
+         "\\exer-pratica-especializacao\\resources\\LIVROS_PM.txt");
 
-        leArquivos("C:\\Users\\Pablo Magalhães\\Documents\\GitHub\\" +
-        "prog-modular\\exer-pratica-especializacao\\resources\\livros.txt",
-        "livro");
 
         interfaceUsuario();
 
@@ -84,7 +80,7 @@ public class Main{
      * Este método é responsável por ler os arquivos e salvar em uma lista de livros ou autores
      * 
      */
-    private static void leArquivos(String path, String tipo){
+    private static void leArquivos(String path){
         
         File file = new File(path);
 
@@ -96,41 +92,40 @@ public class Main{
 
                 while(linha != null){
 
-                    if(tipo.equals("autor")){
+                    String[] dados = linha.split(";");
+                    
+                    String codigo_livro = dados[0];
+                    String nome_livro = dados[1];
+                    Autor autor_livro = Autor.retornaAutor(autores, dados[2]);
+                    String preco_base = dados[4];
 
-                        autores.add(new Autor(linha));
+                    autores.add(autor_livro);
 
-                    }else if(tipo.equals("livro")){
+                    if(dados[3].equals("D")){
 
-                        String[] dados = linha.split(";");
+                        String copias_vendidas = dados[5];
 
-                        String nome_livro = dados[0];
-                        double valor_inical = Double.parseDouble(dados[1]);
-                        int quantidade_paginas = Integer.parseInt(dados[2]);
-                        String nome_autor = dados[3];
-                        String tipo_livro = dados[4];
+                        LivroVirtual livro = new LivroVirtual(codigo_livro, nome_livro, Double.parseDouble(preco_base), autor_livro);
 
-                        Autor autor = procuraAutor(nome_autor, false);
+                        livros.add(livro);
+                        vendas.add(new Venda(Integer.parseInt(copias_vendidas), livro));
+                        
+                    }else if(dados[3].equals("F")){
 
-                        if(autor != null){
-                            if(tipo_livro.equals("Fisico")){
+                        String preco_adicional = dados[5];
+                        String copias_vendidas = dados[6];
+                        String quantidade_paginas = dados[7];
+                        
+                        LivroFisico livro = new LivroFisico(codigo_livro, nome_livro,
+                        Double.parseDouble(preco_base), Integer.parseInt(quantidade_paginas), autor_livro, 
+                        Double.parseDouble(preco_adicional));
 
-                                double preco_adicional = Double.parseDouble(dados[5]);
+                        livros.add(livro);
+                        vendas.add(new Venda(Integer.parseInt(copias_vendidas), livro));
 
-                                livros.add(new LivroFisico(nome_livro, valor_inical, quantidade_paginas
-                                , autor, preco_adicional));
-
-                            }else if(tipo_livro.equals("Virtual")){
-
-                                livros.add(
-                                    new LivroVirtual(nome_livro, valor_inical, quantidade_paginas
-                                    , autor));
-
-                            }
-                        }else{
-                            System.out.println("Autor inválido");
-                        }
                     }
+
+                    
 
                     linha = bufferedReader.readLine();
 
