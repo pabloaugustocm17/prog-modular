@@ -26,7 +26,7 @@ public abstract class Livro{
 
         System.out.println("\nId: " + this.id);
         System.out.println("Nome livro: " + this.nome_livro);
-        System.out.println("Valor: " + this.calculaPrecoLivro() + "$");
+        System.out.println("Valor: " + Math.round(this.calculaPrecoLivro()) + "$");
 
         if(isNomeAutor){
             System.out.println("Nome do autor: " + this.autor_livro.getNome_autor());

@@ -1,8 +1,9 @@
 package app;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ import venda.Venda;
 
 public class Main{
 
-    private final static Scanner teclado = new Scanner(System.in);
+    private final static Scanner teclado = new Scanner(System.in, "UTF-8");
     private static List<Autor> autores = new ArrayList<>();
     private static List<Venda> vendas = new ArrayList<>();
     private static List<Livro> livros = new ArrayList<>();
@@ -49,6 +50,13 @@ public class Main{
 
     /* Métodos Privados */
 
+    /**
+     * @param opcao -> recebe a opção que o usuário escolheu para o app
+     * @return -> retorna true caso seja para o programa continuar executando e false para caso seja para
+     * finalizar
+     * @throws InterruptedException
+     * @throws IOException
+     */
     private static boolean trataOpcoes(String opcao) throws InterruptedException, IOException{
 
         //Limpar Tela
@@ -75,22 +83,24 @@ public class Main{
 
     /**
      * @param path -> informa o caminho do arquivo a ser lido
-     * @param tipo -> informa o tipo de arquivos que será lido, sendo do tipo 'autor' ou 'livro'
      * 
      * Este método é responsável por ler os arquivos e salvar em uma lista de livros ou autores
+     * @throws FileNotFoundException
      * 
      */
-    private static void leArquivos(String path){
+    private static void leArquivos(String path) throws FileNotFoundException{
         
-        File file = new File(path);
+        FileInputStream file = new FileInputStream(path);
 
-        try(FileReader fileReader = new FileReader(file)){
+        try(InputStreamReader fileReader = new InputStreamReader(file, "UTF-8")){
 
             try(BufferedReader bufferedReader = new BufferedReader(fileReader)){
 
                 String linha = bufferedReader.readLine();
 
                 while(linha != null){
+
+                    System.out.println(linha);
 
                     String[] dados = linha.split(";");
                     
@@ -196,6 +206,7 @@ public class Main{
 
     /**
      * @param nome_livro -> recebe o nome do livro à ser procurado
+     * @param isImprimir -> define se é necessário imprimir o livro ou não
      */
     private static Livro procuraLivro(String nome_livro, boolean isImprimir){
 
@@ -220,6 +231,7 @@ public class Main{
 
     /**
      * @param nome_autor -> recebe o nome do autor à ser procurado
+     * @param isImprimir -> define se é necessário imprimir o autor ou não
      */
     private static Autor procuraAutor(String nome_autor, boolean isImprimir){
 
@@ -234,7 +246,7 @@ public class Main{
             }
         }
 
-        System.out.println("Autors não existe");
+        System.out.println("Autor não existe");
 
         return null;
     }

@@ -11,6 +11,11 @@ public class Autor {
 
     /* Métodos */
 
+    /**
+     * @param livros -> recebe os livros para que verifique os que são do autor e mostre-os
+     * @param vendas -> recebe as vendas para calcular o total arrecadado com direitos autorais e vendas
+     * em geral
+     */
     public void imprimiAutor(List<Livro> livros, List<Venda> vendas){
 
         System.out.println("\nNome autor: " + this.nome_autor);
@@ -30,8 +35,9 @@ public class Autor {
             }
     
             System.out.println("Total arrecadado com direitos autorais: " 
-            + this.retornaTotalArrecadadoDireitosAutorais(vendas) + "$");
-            System.out.println("Total arrecadado: " + this.retornaTotalArrecadado(vendas) + "$\n");
+            + Math.round(this.retornaTotalArrecadadoDireitosAutorais(vendas)) + "$");
+            System.out.println("Total arrecadado: " + 
+            Math.round(this.retornaTotalArrecadado(vendas)) + "$\n");
 
         }else{
             System.out.println("\nSem livros registrados\n");
@@ -70,6 +76,12 @@ public class Autor {
         return totalArrecadado(vendas);
     }
 
+    /**
+     * @param autores -> recebe todos autores para verificar se o autor recebido existe,
+     * caso não exista ele é criado
+     * @param nome_autor -> recebe o nome do autor à ser verificado
+     * @return -> recebe o autor novo ou existente
+     */
     public static Autor retornaAutor(List<Autor> autores, String nome_autor){
 
         for(Autor autor : autores){
