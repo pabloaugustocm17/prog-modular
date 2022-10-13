@@ -1,4 +1,4 @@
-from livro.livro import Livro
+from structures.Livro import Livro
 
 class Venda:
     
@@ -8,7 +8,7 @@ class Venda:
         
         self.quantidade_vendas = quantidade_vendas
         self.livro_vendido = livro_vendido
-        self.valor_venda : float = self.quantidade_vendas * valor_livro
+        self.valor_venda : float = int(self.quantidade_vendas) * valor_livro
     
     # getters
     

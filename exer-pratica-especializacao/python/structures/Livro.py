@@ -1,17 +1,18 @@
 from xmlrpc.client import boolean
-from autor.Autor import Autor
 from abc import ABC, abstractmethod
+
+from .Autor import Autor
 
 class Livro(ABC):
     
     def __init__(self, id : str, nome_livro : str, 
-    valor_inical : float, autor_livro : Autor):
+    valor_inicial : float, autor_livro : Autor):
         
         self.id = id
         self.nome_livro = nome_livro
-        self.valor_inicial = valor_inical
+        self.valor_inicial = valor_inicial
         self.autor_livro = autor_livro
-        self.direitos_autorais = valor_inical * 0.08
+        self.direitos_autorais = float(valor_inicial) * float(0.08)
     
     # classe abstrata
     
@@ -25,13 +26,13 @@ class Livro(ABC):
         
         preco_livro = self.calculaPrecoLivro()
         
-        print("\nId: {self.id}\n")
-        print("Nome Livro: {self.nome_livro}\n")
-        print("Valor: {preco_livro} $")
+        print("Id:", self.id ,"\n")
+        print("Nome Livro:", self.nome_livro ,"\n")
+        print("Valor:", preco_livro,"$")
         
         if(isNomeAutor):
             nome_autor = self.autor_livro.getNome_autor()
-            print("\nNome autor: {nome_autor}\n")
+            print("Nome autor:", nome_autor, "\n")
             
     # getters
     
@@ -42,7 +43,7 @@ class Livro(ABC):
         return self.direitos_autorais
     
     def getNome_livro(self):
-        return self.direitos_autorais
+        return self.nome_livro
     
     def getAutor_livro(self):
         return self.autor_livro       

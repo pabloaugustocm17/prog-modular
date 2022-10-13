@@ -1,5 +1,6 @@
-from autor.Autor import Autor
-from livro.livro import Livro
+from structures.Autor import Autor
+from structures.Livro import Livro
+
 
 class LivroFisico(Livro):
     
@@ -15,11 +16,14 @@ class LivroFisico(Livro):
         
     def calculaPrecoLivro(self):
         
-        preco_total_paginas : float = 0.03 * self.quantidade_paginas
+        preco_total_paginas : float = float(0.03) * int(self.quantidade_paginas)
         
-        return preco_total_paginas + self.preco_adicional + self.valor_adicional +  self.direitor_autorais
+        return preco_total_paginas + float(self.preco_adicional) + float(self.valor_inicial) +  float(self.direitos_autorais)
     
     # getter
+    
+    def getNome_livro(self):
+        return super().getNome_livro()
     
     def getQuantidade_paginas(self):
         return self.quantidade_paginas
