@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from structures.Livro import Livro
 from structures.LivroFisico import LivroFisico
 from structures.venda import Venda
@@ -13,7 +14,7 @@ def main():
     
     leArquivos("C:\\Users\\Pablo Magalhães\\Documents\\GitHub\\prog-modular" +
          "\\exer-pratica-especializacao\\resources\\LIVROS_PM.txt", autores, livros, vendas)
-    interfaceUsuario(livros)
+    interfaceUsuario(livros, autores, vendas)
     
 def imprimiOpcoes():
     
@@ -24,31 +25,31 @@ def imprimiOpcoes():
     
 # métodos usuários
     
-def interfaceUsuario(livros):
+def interfaceUsuario(livros, autores, vendas):
     
     while True:
         
         imprimiOpcoes()
         opcao = input()
-        continuar = trataOpcoes(opcao, livros)
+        continuar = trataOpcoes(opcao, livros , autores, vendas)
         if(continuar == "encerrar"):
             break
         
-def trataOpcoes(opcao, livros):
+def trataOpcoes(opcao, livros, autores, vendas):
     
     if(opcao == "0"):
         return "encerrar"
     
     if(opcao == "1"):
-        localizar("livro", livros = livros)
+        localizar("livro", livros = livros, autores = autores)
         return "continuar"
         
     if(opcao == "2"):
-        localizar("autor")
+        localizar("autor", livros = livros, autores = autores)
         return "continuar"    
     
     if(opcao == "3"):
-       registraVenda()
+       registraVenda(livros = livros, vendas = vendas)
        return "continuar"
                 
 # métodos privados
@@ -93,7 +94,7 @@ def leArquivos(path, autores, livros, vendas):
     
     arquivo.close()
     
-def localizar(tipo, livros):
+def localizar(tipo, livros, autores):
     
     isContinuar = True
     
@@ -101,9 +102,16 @@ def localizar(tipo, livros):
         
         nome = str(input("Digite o nome que deseja buscar: "))
         
-        procuraLivro(nome_livro = nome,
-                     isImprimir = True,
-                     livros = livros)
+        if(tipo == "livro"):
+            procuraLivro(nome_livro = nome,
+                        isImprimir = True,
+                        livros = livros)
+        
+        if(tipo == "autor"):
+            procuraAutor(nome_autor = nome,
+                        isImprimir = True,
+                        autores = autores,
+                        livros = livros)
         
         continuar = str(input("Deseja continuar procurando(S/N): "))
         
@@ -111,17 +119,33 @@ def localizar(tipo, livros):
             isContinuar = False
             
 def procuraLivro(nome_livro, isImprimir, livros):
-    
-    
+     
     for livro in livros:
         if(livro.getNome_livro() == nome_livro):
             if(isImprimir == True):
                 livro.imprimiLivro(True)
+                return livro
     
+def procuraAutor(nome_autor, isImprimir, autores, livros):
     
-
-def registraVenda():
-    print("A")         
+    for autor in autores:
+        if(autor.getNome_autor() == nome_autor):
+            if(isImprimir):
+                autor.imprimiAutor(livros) 
+                return autor   
+    
+def registraVenda(livros, vendas):
+    
+    nome = str(input("Informe o nome do livro que deseja comprar: "))
+    livro : Livro = procuraLivro(nome_livro = nome,
+                                 isImprimir = False,
+                                 livros = livros)
+    
+    if(livro != NULL):
         
+        quantidade_compra = int(input("Informe a quantidade de livros que sera comprado: "))
+        vendas.append(Venda(quantidade_vendas = quantidade_compra,
+                            livro_vendido = livro))
+     
 if __name__ == '__main__':
     main()

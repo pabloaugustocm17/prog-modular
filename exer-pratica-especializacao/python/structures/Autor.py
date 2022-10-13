@@ -14,14 +14,14 @@ class Autor:
     
     def imprimiAutor(self, livros):
         
-        print("Nome autor: {self.nome_autor}")
+        print("Nome autor:", self.nome_autor ,"")
 
         if(len(livros) > 0):
             
             print("Livros autor: ")
             
             for livro in livros:
-                if(livro.getAutor_livro == self):
+                if(livro.getAutor_livro() == self):
                     livro.imprimiLivro(False)
                 
     # métodos privados
