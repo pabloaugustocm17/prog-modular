@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /** 
  * MIT License
@@ -121,6 +122,10 @@ public class Pedido implements Comparable<Pedido>{
         if(this.valorTotal()> o.valorTotal()) return 1;
         else if(this.valorTotal() < o.valorTotal()) return -1;
         return 0;
+    }
+
+    public Collection<Comida> getComidas(){
+        return this.itens;
     }
 
 

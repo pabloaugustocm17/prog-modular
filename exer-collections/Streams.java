@@ -1,32 +1,9 @@
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
-public class App {
-    
-    public static void main(String[] args) {
-        
+public class Streams {
 
-        List<Pedido> lista_pedidos = new ArrayList<>();
-        
-        
-        for(int i = 0; i < 5 ; i++){
-            lista_pedidos.add(AppAleat.criarPedido(i));
-        }
-
-
-        System.out.println("Quantidade de pedidos " + 
-        "que contém mais de 4 comidas: " + contarPedidosMaiorQue4(lista_pedidos));
-
-        //imprimiRelatorio(lista_pedidos);
-        imrpimiMaisCara(lista_pedidos);
-
-        System.out.println(quantidadePizzaSemNenhumAdicional(lista_pedidos));
-
-    }
 
     private static long contarPedidosMaiorQue4(List<Pedido> lista){
 
@@ -55,15 +32,16 @@ public class App {
 
     private static long quantidadePizzaSemNenhumAdicional(List<Pedido> lista){
 
-        
-        long valor = lista.stream()
-            .filter(p -> p.toString().contains("Pizza  - R$25.0" + 
-            "\nValor a pagar: R$25.0"))
-            .count();
+
+        LongStream x = lista.stream()
+            .mapToLong(p -> 
+                p.getComidas()
+                .stream()
+                    .map(c -> c.descricao.equals("Pizza") && c.precoAdicionais() == 0)
+                    .count());
+
             
-
-
-        return valor;
+        return x.sum();
 
     }
 
